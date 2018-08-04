@@ -15,7 +15,8 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.github.chrisbanes.photoview.PhotoView;
+import com.davemorrissey.labs.subscaleview.ImageSource;
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 
 
 import static android.content.ContentValues.TAG;
@@ -28,7 +29,7 @@ public class Dialog extends DialogFragment {
 
     ImageView dialogBackImageView;
 
-    PhotoView dialogImageView;
+    SubsamplingScaleImageView dialogImageView;
 
     View view;
     private Bitmap bitmap;
@@ -49,8 +50,7 @@ public class Dialog extends DialogFragment {
                 dismiss();
             }
         });
-
-        dialogImageView.setImageBitmap(bitmap);
+        dialogImageView.setImage(ImageSource.bitmap(bitmap));
         return view;
     }
 
