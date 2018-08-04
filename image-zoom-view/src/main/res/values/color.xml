@@ -2,5 +2,5 @@
 <resources>
 
     <color name="black">#000</color>
-
+    <color name="transprent_black">#8000</color>
 </resources>

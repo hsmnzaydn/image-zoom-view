@@ -28,10 +28,9 @@ import static android.content.ContentValues.TAG;
 public class Dialog extends DialogFragment {
 
     ImageView dialogBackImageView;
-
     SubsamplingScaleImageView dialogImageView;
-
     View view;
+
     private Bitmap bitmap;
 
     @Nullable
