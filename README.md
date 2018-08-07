@@ -34,8 +34,8 @@ allprojects {
     <ul>
 	    <li><b>Drawing as round</b></li>
 	    <pre>&lt;com.ozaydin.serkan.com.image_zoom_view.ImageViewZoom
-    	    android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-	    app:circle="true"
-           android:src="@drawable/aleyna_fox" /&gt;</pre>
+    	     android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+	     app:circle="true"
+             android:src="@drawable/aleyna_fox" /&gt;</pre>
 	</ul>
