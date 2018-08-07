@@ -12,11 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-    <ozaydin.serkan.com.image_zoom_view.ImageViewZoom
 
+    <ozaydin.serkan.com.image_zoom_view.ImageViewZoom
         android:layout_gravity="center"
         android:id="@+id/activity_main_image_view"
         android:layout_width="180dp"
+        app:circle="true"
         android:layout_height="180dp"
         android:src="@drawable/aleyna_fox" />
 

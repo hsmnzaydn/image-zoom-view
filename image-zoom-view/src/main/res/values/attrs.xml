@@ -1,0 +1,5 @@
+<resources>
+    <declare-styleable name="ImageViewZoom">
+        <attr name="circle" format="boolean" />
+    </declare-styleable>
+</resources>
