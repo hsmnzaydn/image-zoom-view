@@ -32,7 +32,7 @@ allprojects {
 <h2>Features</h2>
 <pr>
     <ul>
-	    <li><b>Canvas as circle</b></li>
+	    <li><b>Drawing as round</b></li>
 	    <pre>&lt;com.ozaydin.serkan.com.image_zoom_view.ImageViewZoom
     	    android:layout_width="wrap_content"
             android:layout_height="wrap_content"
