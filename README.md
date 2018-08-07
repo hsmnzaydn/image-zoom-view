@@ -21,7 +21,7 @@ allprojects {
   </pre>
 
 <b>2)</b> Add the view to your layout XML.
-<pre>implemantation 'com.github.hsmnzaydn:imagezoom:1.0.0'</pre>
+<pre>implementation 'com.github.hsmnzaydn:image-zoom-view:1.1.0'</pre>
 
 <b>3)</b> Add the view to your layout XML.
 <pre>&lt;com.ozaydin.serkan.com.image_zoom_view.ImageViewZoom
@@ -29,4 +29,13 @@ allprojects {
     android:layout_height="wrap_content"
     android:src="@drawable/aleyna_fox" /&gt;</pre>
     
- 
+<h2>Features</h2>
+<pr>
+    <ul>
+	    <li><b>Canvas as circle</b></li>
+	    <pre>&lt;com.ozaydin.serkan.com.image_zoom_view.ImageViewZoom
+    	    android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+	    app:circle="true"
+           android:src="@drawable/aleyna_fox" /&gt;</pre>
+	</ul>
