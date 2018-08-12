@@ -39,3 +39,6 @@ allprojects {
 	     app:circle="true"
              android:src="@drawable/aleyna_fox" /&gt;</pre>
 	</ul>
+	<h2> Dependicies </h2>
+	<pr>
+		<a href="https://github.com/davemorrissey/subsampling-scale-image-view"><b>Subsampling Scale Image View</b></a>
