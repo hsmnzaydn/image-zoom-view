@@ -41,9 +41,9 @@ allprojects {
           <li><b>Get ImageViewZoom's base64 decoded</b></li>
 	    <br>
 	    Returns ImageViewZoom's base64 
-        <pre>
-             imageViewZoom.getAsBase64();
-         </pre>
+             <pre>
+imageViewZoom.getAsBase64();
+             </pre>
 	</ul>   
 	<h2> Dependicies </h2>
 	<pr>
