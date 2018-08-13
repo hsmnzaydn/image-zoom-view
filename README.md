@@ -21,7 +21,7 @@ allprojects {
   </pre>
 
 <b>2)</b> Add the view to your layout XML.
-<pre>implementation 'com.github.hsmnzaydn:image-zoom-view:1.1.0'</pre>
+<pre>implementation 'com.github.hsmnzaydn:image-zoom-view:1.1.1'</pre>
 
 <b>3)</b> Add the view to your layout XML.
 <pre>&lt;com.ozaydin.serkan.com.image_zoom_view.ImageViewZoom
