@@ -18,6 +18,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         imageViewZoom=findViewById(R.id.activity_main_image_view);
-
+        imageViewZoom.getAsBase64();
     }
 }
