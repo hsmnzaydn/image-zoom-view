@@ -38,13 +38,13 @@ allprojects {
              android:layout_height="wrap_content"
 	     app:circle="true"
              android:src="@drawable/aleyna_fox" /&gt;</pre>
-        <li><b>Get ImageViewZoom's base64 decoded</b></li>
+          <li><b>Get ImageViewZoom's base64 decoded</b></li>
+	    <br>
+	    Returns ImageViewZoom's base64 
         <pre>
              imageViewZoom.getAsBase64();
-        </pre>
-        
-	</ul>
-
+         </pre>
+	</ul>   
 	<h2> Dependicies </h2>
 	<pr>
 		<a href="https://github.com/davemorrissey/subsampling-scale-image-view"><b>Subsampling Scale Image View</b></a>
