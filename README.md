@@ -6,7 +6,8 @@ Imageview zoom library for android. It's simple show image library.
 </br>
 </br>
  <a href="https://imgflip.com/gif/2falhe"><img src="https://i.imgflip.com/2falhe.gif" title="made at imgflip.com"/></a>
-
+<a href="https://imgflip.com/gif/2g4o4b"><img src="https://i.imgflip.com/2g4o4b.gif" title="made at imgflip.com"/></a>
+<a href="https://imgflip.com/gif/2g4o6v"><img src="https://i.imgflip.com/2g4o6v.gif" title="made at imgflip.com"/></a>
 <h2>Quick start</h2>
 <pr>
 <b>1)</b> Add this library as a dependency in your app's build.project file.
@@ -21,7 +22,7 @@ allprojects {
   </pre>
 
 <b>2)</b> Add the view to your layout XML.
-<pre>implementation 'com.github.hsmnzaydn:image-zoom-view:1.1.1'</pre>
+<pre>implementation 'com.github.hsmnzaydn:imagezoom:1.2.0'</pre>
 
 <b>3)</b> Add the view to your layout XML.
 <pre>&lt;com.ozaydin.serkan.com.image_zoom_view.ImageViewZoom
@@ -58,18 +59,12 @@ imageViewZoom.saveImage(MainActivity.this, "ImageViewZoom", "test", Bitmap.Compr
             }
         });
 	    </pre>
-	    <ul><b>Show Option TO User</b></ul>
-	    <li><b>Option 1: Save Image</b> </li>
-	    <b>      Simple Usage</b>
-	    Step One: Definition "ImageViewZoomConfiguration" object</br>
-	    Step Two: Set "saveProperty" as true</br>
-	    Step Three: Set "ImageViewZoomConfiguration" object to "ImageViewZoom" 's configuration</br>
+	    <li><b>Show Option TO User</b> </li>
 	    <pre>
 	       ImageViewZoomConfig imageViewZoomConfig=new ImageViewZoomConfig();
-               imageViewZoomConfig.saveProperty(true);
+               imageViewZoomConfig.saveProperty(true); // for show save opion to user
                imageViewZoom.setConfig(imageViewZoomConfig);
 	    </pre>
-	</ul>   
 	<h2> Dependicies </h2>
 	<pr>
 		<a href="https://github.com/davemorrissey/subsampling-scale-image-view"><b>Subsampling Scale Image View</b></a>
