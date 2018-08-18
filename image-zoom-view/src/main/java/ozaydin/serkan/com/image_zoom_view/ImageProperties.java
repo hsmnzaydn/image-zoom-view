@@ -2,9 +2,18 @@ package ozaydin.serkan.com.image_zoom_view;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.util.Base64;
+import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Random;
+import java.util.UUID;
+
+import static android.content.ContentValues.TAG;
 
 public class ImageProperties {
 
@@ -34,6 +43,51 @@ public class ImageProperties {
         System.gc();
         return Base64.encodeToString(b, Base64.NO_WRAP);
 
+    }
+
+    public static void saveImage(Bitmap bitmap,String folderName,String filename,Bitmap.CompressFormat compressFormat,SaveFileListener saveFileListener){
+
+        filename= filename + UUID.randomUUID();
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + File.separator + folderName);
+        if (!file.exists()) {
+            file.mkdir();
+        }
+        file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + File.separator + folderName + File.separator +filename + ".jpg");
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            bitmap.compress(compressFormat, 90, out);
+            out.flush();
+            out.close();
+            saveFileListener.onSuccess(file);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            Log.e("ImageViewZoom",exception.getMessage());
+            saveFileListener.onFail(exception);
+
+        }
+    }
+
+
+    public static void saveImage(Bitmap bitmap,Bitmap.CompressFormat compressFormat,SaveFileListener saveFileListener){
+
+        String filename= UUID.randomUUID().toString();
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + File.separator + "");
+        if (!file.exists()) {
+            file.mkdir();
+        }
+        file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + File.separator + "" + File.separator +filename + ".jpg");
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            bitmap.compress(compressFormat, 90, out);
+            out.flush();
+            out.close();
+            saveFileListener.onSuccess(file);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            Log.e("ImageViewZoom",exception.getMessage());
+            saveFileListener.onFail(exception);
+
+        }
     }
 
 }

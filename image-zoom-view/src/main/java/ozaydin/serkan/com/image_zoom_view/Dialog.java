@@ -28,8 +28,11 @@ import static android.content.ContentValues.TAG;
 public class Dialog extends DialogFragment {
 
     ImageView dialogBackImageView;
+    ImageView threeDotImageView;
     SubsamplingScaleImageView dialogImageView;
     View view;
+    ImageViewZoomBottomSheet imageViewZoomBottomSheet;
+    ImageViewZoomConfig imageViewZoomConfig;
 
     private Bitmap bitmap;
 
@@ -40,8 +43,7 @@ public class Dialog extends DialogFragment {
 
         createFullScreenDialogFragment();
 
-        dialogBackImageView=view.findViewById(R.id.dialog_back_image_view);
-        dialogImageView=view.findViewById(R.id.dialog_image_view);
+        init();
 
         dialogBackImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,24 +51,57 @@ public class Dialog extends DialogFragment {
                 dismiss();
             }
         });
+
+
+        threeDotImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageViewZoomBottomSheet.setConfiguration(getFragmentManager(),imageViewZoomConfig,bitmap);
+            }
+        });
+
+
+        configuration(imageViewZoomConfig);
+
+
         dialogImageView.setImage(ImageSource.bitmap(bitmap));
         return view;
     }
 
-    public void show(FragmentManager fragmentManager, Bitmap bitmapFromView) {
+
+    public void init() {
+        dialogBackImageView = view.findViewById(R.id.dialog_back_image_view);
+        dialogImageView = view.findViewById(R.id.dialog_image_view);
+        threeDotImageView = view.findViewById(R.id.dialog_three_dot);
+    }
+
+
+    public void show(FragmentManager fragmentManager, Bitmap bitmapFromView, ImageViewZoomConfig imageViewZoomConfig) {
         super.show(fragmentManager, TAG);
         bitmap = bitmapFromView;
+        this.imageViewZoomConfig=imageViewZoomConfig;
+    }
 
+    /**
+     * Decide show three dot icon show
+     * @param imageViewZoomConfig ImageViewZoom configuration object
+     */
+    public void configuration(ImageViewZoomConfig imageViewZoomConfig){
+        threeDotImageView.setVisibility(View.VISIBLE);
+        imageViewZoomBottomSheet=new ImageViewZoomBottomSheet();
+        this.imageViewZoomConfig=imageViewZoomConfig;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        getDialog().getWindow().getAttributes().windowAnimations=R.style.DialogStyle;
+        getDialog().getWindow().getAttributes().windowAnimations = R.style.DialogStyle;
     }
 
+    /**
+     * Use for show full screen ImageViewZoom
+     */
     public void createFullScreenDialogFragment() {
-
         final RelativeLayout root = new RelativeLayout(getActivity());
         root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
@@ -76,9 +111,6 @@ public class Dialog extends DialogFragment {
         getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
     }
-
-
-
 
 
 }

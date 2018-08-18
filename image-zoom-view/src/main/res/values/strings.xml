@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">image-zoom-view</string>
+
+    <string name="description_save">Save</string>
+    <string name="description_success">Success</string>
+    <string name="description_fail">Fail</string>
 </resources>

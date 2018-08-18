@@ -1,5 +1,7 @@
 package ozaydin.serkan.com.image_zoom_view;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -24,14 +26,12 @@ import android.view.View;
 
 public class ImageViewZoom extends AppCompatImageView implements View.OnClickListener {
     private Boolean isCircle = false;
-
+    private ImageViewZoomConfig imageViewZoomConfig;
     public ImageViewZoom(Context context) {
         super(context);
         setOnClickListener(this);
 
     }
-
-
 
     public ImageViewZoom(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -47,8 +47,8 @@ public class ImageViewZoom extends AppCompatImageView implements View.OnClickLis
             a.recycle();
         }
 
-
     }
+
 
     public ImageViewZoom(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -56,23 +56,63 @@ public class ImageViewZoom extends AppCompatImageView implements View.OnClickLis
 
     }
 
-
+    /**
+     *
+     * @return ImageViewZoom's base64
+     */
     public String getAsBase64(){
         return ImageProperties.bitmapToBase64(((BitmapDrawable)this.getDrawable()).getBitmap());
     }
 
+    /**
+     * Return bitmap of ImageViewZoom
+     * @return
+     */
+    public Bitmap getBitmap(){
+        return ((BitmapDrawable)this.getDrawable()).getBitmap();
+    }
 
-
-    @Override
-    public void onClick(View view) {
-        if (getDrawable() != null) {
-            new Dialog().show(((FragmentActivity) getContext()).getSupportFragmentManager(), ((BitmapDrawable) getDrawable()).getBitmap());
+    /**
+     * Save image
+     * @param activity
+     * @param folderName Folder name to save
+     * @param fileName By what name to save
+     * @param compressFormat Compress Format
+     * @param permissionRequestCode Runtime permission code
+     * @param saveFileListener
+     */
+    public void saveImage(Activity activity, String folderName,String fileName, Bitmap.CompressFormat compressFormat, int permissionRequestCode,SaveFileListener saveFileListener){
+        if(Permission.askPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE,permissionRequestCode)){
+            ImageProperties.saveImage(getBitmap(),folderName,fileName,compressFormat,saveFileListener);
         }
     }
 
+    /**
+     * Set imageViewZoom configuration
+     * @param config ImageViewZoomConfig object
+     */
+    public void setConfig(ImageViewZoomConfig config){
+        this.imageViewZoomConfig=config;
+    }
+
+
+
+    /**
+     * When click ImageViewZoom
+     * @param view
+     */
+    @Override
+    public void onClick(View view) {
+        if (getDrawable() != null) {
+            new Dialog().show(((FragmentActivity) getContext()).getSupportFragmentManager(), getBitmap(),this.imageViewZoomConfig);
+        }
+    }
+
+
+
+
     @Override
     protected void onDraw(Canvas canvas) {
-
         if (isCircle) {
             drawAsCircle(canvas);
 
@@ -81,10 +121,12 @@ public class ImageViewZoom extends AppCompatImageView implements View.OnClickLis
 
         }
 
-
     }
 
-
+    /**
+     * Draws ImageViewZoom on view
+     * @param canvas
+     */
     public void drawAsCircle(Canvas canvas) {
         Drawable drawable = getDrawable();
 
