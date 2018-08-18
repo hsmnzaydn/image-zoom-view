@@ -44,8 +44,33 @@ allprojects {
              <pre>
 imageViewZoom.getAsBase64();
              </pre>
+	    <li><b>Save Image As File</b></li>
+	    <b>Simple Usage</b>
+	    <pre>
+imageViewZoom.saveImage(MainActivity.this, "ImageViewZoom", "test", Bitmap.CompressFormat.JPEG, 1, new SaveFileListener() {
+            @Override
+            public void onSuccess(File file) {
+                Toast.makeText(MainActivity.this,"Success",Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onFail(Exception excepti) {
+                Toast.makeText(MainActivity.this,"Error Save",Toast.LENGTH_SHORT).show();
+            }
+        });
+	    </pre>
+	    <ul><b>Show Option TO User</b></ul>
+	    <li><b>Option 1: Save Image</b> </li>
+	    <b>      Simple Usage</b>
+	    Step One: Definition "ImageViewZoomConfiguration" object</br>
+	    Step Two: Set "saveProperty" as true</br>
+	    Step Three: Set "ImageViewZoomConfiguration" object to "ImageViewZoom" 's configuration</br>
+	    <pre>
+	       ImageViewZoomConfig imageViewZoomConfig=new ImageViewZoomConfig();
+               imageViewZoomConfig.saveProperty(true);
+               imageViewZoom.setConfig(imageViewZoomConfig);
+	    </pre>
 	</ul>   
 	<h2> Dependicies </h2>
 	<pr>
 		<a href="https://github.com/davemorrissey/subsampling-scale-image-view"><b>Subsampling Scale Image View</b></a>
-
+	    
