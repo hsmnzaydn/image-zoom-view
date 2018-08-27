@@ -6,9 +6,10 @@ Imageview zoom library for android. It's simple show image library.
 <b>Demo</b>  
 </br>  
 </br>  
- <a href="https://imgflip.com/gif/2falhe"><img src="https://i.imgflip.com/2falhe.gif" title="made at imgflip.com"/></a>  
+<a href="https://imgflip.com/gif/2falhe"><img src="https://i.imgflip.com/2falhe.gif" title="made at imgflip.com"/></a>  
 <a href="https://imgflip.com/gif/2g4o4b"><img src="https://i.imgflip.com/2g4o4b.gif" title="made at imgflip.com"/></a>  
 <a href="https://imgflip.com/gif/2g4o6v"><img src="https://i.imgflip.com/2g4o6v.gif" title="made at imgflip.com"/></a>  
+
 <h2>Quick start</h2>  
 <pr>  
 <b>1)</b> Add this library as a dependency in your app's build.project file.  
@@ -22,7 +23,7 @@ allprojects {
   </pre>  
   
 <b>2)</b> Add the view to your layout XML.  
-<pre>implementation 'com.github.hsmnzaydn:imagezoom:1.2.0'</pre>  
+<pre>implementation 'com.github.hsmnzaydn:imagezoom:1.2.1'</pre>  
   
 <b>3)</b> Add the view to your layout XML.  
 <pre>&lt;com.ozaydin.serkan.com.image_zoom_view.ImageViewZoom  
