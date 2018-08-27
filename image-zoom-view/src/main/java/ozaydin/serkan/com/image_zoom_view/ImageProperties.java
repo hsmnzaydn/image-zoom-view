@@ -68,26 +68,5 @@ public class ImageProperties {
     }
 
 
-    public static void saveImage(Bitmap bitmap,Bitmap.CompressFormat compressFormat,SaveFileListener saveFileListener){
-
-        String filename= UUID.randomUUID().toString();
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + File.separator + "");
-        if (!file.exists()) {
-            file.mkdir();
-        }
-        file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + File.separator + "" + File.separator +filename + ".jpg");
-        try {
-            FileOutputStream out = new FileOutputStream(file);
-            bitmap.compress(compressFormat, 90, out);
-            out.flush();
-            out.close();
-            saveFileListener.onSuccess(file);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            Log.e("ImageViewZoom",exception.getMessage());
-            saveFileListener.onFail(exception);
-
-        }
-    }
 
 }

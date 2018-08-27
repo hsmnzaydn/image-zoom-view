@@ -6,19 +6,21 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.SwipeDismissBehavior;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
-
-
 import static android.content.ContentValues.TAG;
 
 /**
@@ -33,8 +35,11 @@ public class Dialog extends DialogFragment {
     View view;
     ImageViewZoomBottomSheet imageViewZoomBottomSheet;
     ImageViewZoomConfig imageViewZoomConfig;
-
+    ImageSaveProperties imageSaveProperties;
     private Bitmap bitmap;
+    private RelativeLayout root;
+
+
 
     @Nullable
     @Override
@@ -56,7 +61,12 @@ public class Dialog extends DialogFragment {
         threeDotImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imageViewZoomBottomSheet.setConfiguration(getFragmentManager(),imageViewZoomConfig,bitmap);
+                if(imageSaveProperties != null){
+                    imageViewZoomBottomSheet.setConfiguration(getFragmentManager(),imageViewZoomConfig,imageSaveProperties,bitmap);
+                }else {
+                    imageViewZoomBottomSheet.setConfiguration(getFragmentManager(),imageViewZoomConfig,bitmap);
+                }
+
             }
         });
 
@@ -65,8 +75,11 @@ public class Dialog extends DialogFragment {
 
 
         dialogImageView.setImage(ImageSource.bitmap(bitmap));
+
+
         return view;
     }
+
 
 
     public void init() {
@@ -75,7 +88,12 @@ public class Dialog extends DialogFragment {
         threeDotImageView = view.findViewById(R.id.dialog_three_dot);
     }
 
-
+    /**
+     * When ImageSaveProperties is null
+     * @param fragmentManager
+     * @param bitmapFromView
+     * @param imageViewZoomConfig
+     */
     public void show(FragmentManager fragmentManager, Bitmap bitmapFromView, ImageViewZoomConfig imageViewZoomConfig) {
         super.show(fragmentManager, TAG);
         bitmap = bitmapFromView;
@@ -83,13 +101,29 @@ public class Dialog extends DialogFragment {
     }
 
     /**
+     * When ImageSaveProperties is not null
+     * @param fragmentManager
+     * @param bitmapFromView
+     * @param imageViewZoomConfig
+     * @param imageSaveProperties
+     */
+    public void show(FragmentManager fragmentManager, Bitmap bitmapFromView, ImageViewZoomConfig imageViewZoomConfig,ImageSaveProperties imageSaveProperties) {
+        super.show(fragmentManager, TAG);
+        bitmap = bitmapFromView;
+        this.imageViewZoomConfig=imageViewZoomConfig;
+        this.imageSaveProperties=imageSaveProperties;
+    }
+
+    /**
      * Decide show three dot icon show
      * @param imageViewZoomConfig ImageViewZoom configuration object
      */
     public void configuration(ImageViewZoomConfig imageViewZoomConfig){
-        threeDotImageView.setVisibility(View.VISIBLE);
-        imageViewZoomBottomSheet=new ImageViewZoomBottomSheet();
-        this.imageViewZoomConfig=imageViewZoomConfig;
+        if(imageViewZoomConfig != null){
+            threeDotImageView.setVisibility(View.VISIBLE);
+            imageViewZoomBottomSheet=new ImageViewZoomBottomSheet();
+            this.imageViewZoomConfig=imageViewZoomConfig;
+        }
     }
 
     @Override
@@ -102,15 +136,18 @@ public class Dialog extends DialogFragment {
      * Use for show full screen ImageViewZoom
      */
     public void createFullScreenDialogFragment() {
-        final RelativeLayout root = new RelativeLayout(getActivity());
+        root = new RelativeLayout(getActivity());
         root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         getDialog().setContentView(root);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+
         getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
     }
+
+
 
 
 }

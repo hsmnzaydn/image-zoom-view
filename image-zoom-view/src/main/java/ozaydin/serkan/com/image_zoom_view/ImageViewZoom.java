@@ -15,6 +15,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 
@@ -27,6 +28,7 @@ import android.view.View;
 public class ImageViewZoom extends AppCompatImageView implements View.OnClickListener {
     private Boolean isCircle = false;
     private ImageViewZoomConfig imageViewZoomConfig;
+    private ImageSaveProperties imageSaveProperties;
     public ImageViewZoom(Context context) {
         super(context);
         setOnClickListener(this);
@@ -81,10 +83,29 @@ public class ImageViewZoom extends AppCompatImageView implements View.OnClickLis
      * @param permissionRequestCode Runtime permission code
      * @param saveFileListener
      */
-    public void saveImage(Activity activity, String folderName,String fileName, Bitmap.CompressFormat compressFormat, int permissionRequestCode,SaveFileListener saveFileListener){
-        if(Permission.askPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE,permissionRequestCode)){
-            ImageProperties.saveImage(getBitmap(),folderName,fileName,compressFormat,saveFileListener);
-        }
+    public void saveImage(Activity activity, String folderName, String fileName, Bitmap.CompressFormat compressFormat, int permissionRequestCode, ImageViewZoomConfig imageViewZoomConfig, SaveFileListener saveFileListener){
+
+
+       if(imageViewZoomConfig.getImageViewZoomConfigSaveMethod() == null){
+           Log.e("ImageViewZoom", "Please set ImageViewZoomConfig save method\n\n");
+           throw new RuntimeException();
+       }else {
+           switch (imageViewZoomConfig.getImageViewZoomConfigSaveMethod()){
+               case always:
+                   if(Permission.askPermissionForActivity(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE,permissionRequestCode)){
+                       ImageProperties.saveImage(getBitmap(),folderName,fileName,compressFormat,saveFileListener);
+                       imageSaveProperties=new ImageSaveProperties(folderName,fileName,compressFormat,permissionRequestCode,saveFileListener);
+                   }
+                   break;
+               case onlyOnDialog:
+                   imageSaveProperties=new ImageSaveProperties(folderName,fileName,compressFormat,permissionRequestCode,saveFileListener);
+                   break;
+               default:
+                   imageSaveProperties=new ImageSaveProperties(folderName,fileName,compressFormat,permissionRequestCode,saveFileListener);
+                   break;
+           }
+       }
+
     }
 
     /**
@@ -104,7 +125,11 @@ public class ImageViewZoom extends AppCompatImageView implements View.OnClickLis
     @Override
     public void onClick(View view) {
         if (getDrawable() != null) {
-            new Dialog().show(((FragmentActivity) getContext()).getSupportFragmentManager(), getBitmap(),this.imageViewZoomConfig);
+            if(imageSaveProperties != null){
+                new Dialog().show(((FragmentActivity) getContext()).getSupportFragmentManager(), getBitmap(),this.imageViewZoomConfig,imageSaveProperties);
+            }else{
+                new Dialog().show(((FragmentActivity) getContext()).getSupportFragmentManager(), getBitmap(),this.imageViewZoomConfig);
+            }
         }
     }
 
