@@ -4,8 +4,6 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Gallery;
 import android.widget.Toast;
 
 import java.io.File;
@@ -28,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         imageViewZoom=findViewById(R.id.activity_main_image_view);
         // Return Image's base 64 code
-        imageViewZoom.getAsBase64();
+        imageViewZoom.getBase64();
 
         // ImageViewZoomConfig
         ImageViewZoomConfig imageViewZoomConfig=new ImageViewZoomConfig();

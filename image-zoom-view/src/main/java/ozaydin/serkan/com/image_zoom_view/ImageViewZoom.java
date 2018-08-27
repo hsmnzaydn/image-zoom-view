@@ -62,7 +62,7 @@ public class ImageViewZoom extends AppCompatImageView implements View.OnClickLis
      *
      * @return ImageViewZoom's base64
      */
-    public String getAsBase64(){
+    public String getBase64(){
         return ImageProperties.bitmapToBase64(((BitmapDrawable)this.getDrawable()).getBitmap());
     }
 
