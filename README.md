@@ -5,10 +5,7 @@ Imageview zoom library for android. It's simple show image library.
 </br>  
 <b>Demo</b>  
 </br>  
-</br>  
-<a href="https://imgflip.com/gif/2falhe"><img src="https://i.imgflip.com/2falhe.gif" title="made at imgflip.com"/></a>  
-<a href="https://imgflip.com/gif/2g4o4b"><img src="https://i.imgflip.com/2g4o4b.gif" title="made at imgflip.com"/></a>  
-<a href="https://imgflip.com/gif/2g4o6v"><img src="https://i.imgflip.com/2g4o6v.gif" title="made at imgflip.com"/></a>  
+<a href="https://imgflip.com/gif/2falhe"><img src="https://i.imgflip.com/2falhe.gif" title="made at imgflip.com"/></a>  <a href="https://imgflip.com/gif/2g4o4b"><img src="https://i.imgflip.com/2g4o4b.gif" title="made at imgflip.com"/></a>  <a href="https://imgflip.com/gif/2g4o6v"><img src="https://i.imgflip.com/2g4o6v.gif" title="made at imgflip.com"/></a>  
 
 <h2>Quick start</h2>  
 <pr>  
