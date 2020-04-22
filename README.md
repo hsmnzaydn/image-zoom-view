@@ -19,11 +19,11 @@ allprojects {
    }  
   </pre>  
   
-<b>2)</b> Add the view to your layout XML.  
+<b>2)</b> Add this dependency to your app's build.module file.  
 <pre>implementation 'com.github.hsmnzaydn:imagezoom:1.2.1'</pre>  
   
 <b>3)</b> Add the view to your layout XML.  
-<pre>&lt;com.ozaydin.serkan.com.image_zoom_view.ImageViewZoom  
+<pre>&lt;ozaydin.serkan.com.image_zoom_view.ImageViewZoom  
     android:layout_width="wrap_content"  
     android:layout_height="wrap_content"  
     android:src="@drawable/aleyna_fox" /&gt;</pre>  
@@ -31,7 +31,7 @@ allprojects {
 <h1>Features</h1>  
 <pr>  
       <h3>Drawing as round</h3>
-       <pre>&lt;com.ozaydin.serkan.com.image_zoom_view.ImageViewZoom  
+       <pre>&lt;ozaydin.serkan.com.image_zoom_view.ImageViewZoom  
             android:layout_width="wrap_content"  
              android:layout_height="wrap_content"  
              app:circle="true"  
