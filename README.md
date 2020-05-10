@@ -47,24 +47,22 @@ allprojects {
 <h3>Save Image As File</h3>
        
 
- **Step 1.** Init ImageViewZoomConfig and set saveProperty field as "true"
-  
+ **Step 1.** </br>
+ <b>Init ImageViewZoomConfig</b> </br>
+ Set saveProperty field as "true"
+ </br>
+ </br>
+ <b>Init saveMethod </b></br>
+ If you want show save option to user only when open dialog you have to set "ImageViewZoomConfig.ImageViewZoomConfigSaveMethod" as "onlyOnDialog" </br>
+ If you want save image when run code you have to set "ImageViewZoomConfig.ImageViewZoomConfigSaveMethod" as "always".
 
-    ImageViewZoomConfig imageViewZoomConfig=new ImageViewZoomConfig();  
-    imageViewZoomConfig.saveProperty(true);
-**Step 2.** Init "ImageViewZoomConfig.ImageViewZoomConfigSaveMethod" 
-      **Note:** If you want show save option to user only when open dialog you have to set "ImageViewZoomConfig.ImageViewZoomConfigSaveMethod" as "onlyOnDialog"
-      If you want save image when run code you have to set "ImageViewZoomConfig.ImageViewZoomConfigSaveMethod" as "always".
-      
-		
-    ImageViewZoomConfig.ImageViewZoomConfigSaveMethod imageViewZoomConfigSaveMethod = ImageViewZoomConfig.ImageViewZoomConfigSaveMethod.onlyOnDialog; // You can use always
-    imageViewZoomConfig.setImageViewZoomConfigSaveMethod(imageViewZoomConfigSaveMethod);
+     ImageViewZoomConfig imageViewZoomConfig =new ImageViewZoomConfig.Builder().saveProperty(true).saveMethod(ImageViewZoomConfig.ImageViewZoomConfigSaveMethod.onlyOnDialog).build();
 
-**Step 3.** Set Config
+**Step 2.** Set Config
 
     imageViewZoom.setConfig(imageViewZoomConfig);
     
-**Step 4.** Use "saveImage()" method
+**Step 3.** Use "saveImage()" method
 
     imageViewZoom.saveImage(MainActivity.this, "ImageViewZoom", "test", Bitmap.CompressFormat.JPEG, 1, imageViewZoomConfig,new SaveFileListener() {  
       @Override   
