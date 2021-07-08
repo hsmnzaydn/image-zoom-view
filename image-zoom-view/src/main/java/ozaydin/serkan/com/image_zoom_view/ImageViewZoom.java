@@ -134,6 +134,14 @@ public class ImageViewZoom extends AppCompatImageView implements View.OnClickLis
         }
     }
 
+    /**
+     * Return the activity which might be needed as context object but is not given by View#getContext
+     * as with support library <23.0.0 it might just be a wrapper.
+     *
+     * Solution from https://stackoverflow.com/a/38814443/8524651
+     *
+     * @return the correct activity context
+     */
     private FragmentActivity getActivity() {
         Context context = getContext();
         while (context instanceof ContextWrapper) {
