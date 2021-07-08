@@ -3,6 +3,7 @@ package ozaydin.serkan.com.image_zoom_view;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -126,14 +127,31 @@ public class ImageViewZoom extends AppCompatImageView implements View.OnClickLis
     public void onClick(View view) {
         if (getDrawable() != null) {
             if(imageSaveProperties != null){
-                new Dialog().show(((FragmentActivity) getContext()).getSupportFragmentManager(), getBitmap(),this.imageViewZoomConfig,imageSaveProperties);
+                new Dialog().show(getActivity().getSupportFragmentManager(), getBitmap(),this.imageViewZoomConfig,imageSaveProperties);
             }else{
-                new Dialog().show(((FragmentActivity) getContext()).getSupportFragmentManager(), getBitmap(),this.imageViewZoomConfig);
+                new Dialog().show(getActivity().getSupportFragmentManager(), getBitmap(),this.imageViewZoomConfig);
             }
         }
     }
 
-
+    /**
+     * Return the activity which might be needed as context object but is not given by View#getContext
+     * as with support library <23.0.0 it might just be a wrapper.
+     *
+     * Solution from https://stackoverflow.com/a/38814443/8524651
+     *
+     * @return the correct activity context
+     */
+    private FragmentActivity getActivity() {
+        Context context = getContext();
+        while (context instanceof ContextWrapper) {
+            if (context instanceof FragmentActivity) {
+                return (FragmentActivity) context;
+            }
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+        return null;
+    }
 
 
     @Override
