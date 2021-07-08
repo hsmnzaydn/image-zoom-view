@@ -20,7 +20,7 @@ allprojects {
   </pre>  
   
 <b>2)</b> Add this dependency to your app's build.module file.  
-<pre>implementation 'com.github.hsmnzaydn:imagezoom:1.3.0'</pre>  
+<pre>implementation 'com.github.hsmnzaydn:imagezoom:1.4.0'</pre>  
   
 <b>3)</b> Add the view to your layout XML.  
 <pre>&lt;ozaydin.serkan.com.image_zoom_view.ImageViewZoom  
