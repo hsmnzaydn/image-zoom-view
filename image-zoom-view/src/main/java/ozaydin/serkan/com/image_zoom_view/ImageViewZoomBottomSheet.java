@@ -3,10 +3,14 @@ package ozaydin.serkan.com.image_zoom_view;
 import android.Manifest;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
 import androidx.fragment.app.FragmentManager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,19 +34,12 @@ public class ImageViewZoomBottomSheet extends BottomSheetDialogFragment {
         init();
         configuration();
 
-        downloadImageLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (Permission.askPermissionForFragment(getActivity(), ImageViewZoomBottomSheet.this, Manifest.permission.WRITE_EXTERNAL_STORAGE, imageSaveProperties.getPermissionRequestCode())) {
-                    saveImage();
-                }
-
+        downloadImageLinearLayout.setOnClickListener(view -> {
+            if (Permission.askPermissionForFragment(requireActivity(), ImageViewZoomBottomSheet.this, Manifest.permission.WRITE_EXTERNAL_STORAGE, imageSaveProperties.getPermissionRequestCode())) {
+                saveImage();
             }
         });
-
-
         return root;
-
     }
 
     public void configuration() {
