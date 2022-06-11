@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         // ImageViewZoomConfig
         // OnlyDialog Enum work only user when click to save choose
         // Always Enum work when use saveImage() method and user when click to save choose
-        ImageViewZoomConfig imageViewZoomConfig =new ImageViewZoomConfig.Builder().saveProperty(true).saveMethod(ImageViewZoomConfig.ImageViewZoomConfigSaveMethod.onlyOnDialog).build();
+        ImageViewZoomConfig imageViewZoomConfig = new ImageViewZoomConfig.Builder().saveProperty(true).saveMethod(ImageViewZoomConfig.ImageViewZoomConfigSaveMethod.onlyOnDialog).build();
 
 
         imageViewZoom.setConfig(imageViewZoomConfig);
@@ -48,12 +48,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(Exception excepti) {
+            public void onFail(Exception exception) {
                 Toast.makeText(MainActivity.this, "Error Save", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
     @Override

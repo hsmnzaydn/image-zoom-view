@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -18,7 +19,10 @@ import android.widget.RelativeLayout;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
+
 import static android.content.ContentValues.TAG;
+
+import java.util.Objects;
 
 /**
  * Created by hsmnzaydn on 04.08.2018.
@@ -37,7 +41,6 @@ public class Dialog extends DialogFragment {
     private RelativeLayout root;
 
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,36 +50,24 @@ public class Dialog extends DialogFragment {
 
         init();
 
-        dialogBackImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismiss();
-            }
-        });
+        dialogBackImageView.setOnClickListener(view -> dismiss());
 
 
-        threeDotImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(imageSaveProperties != null){
-                    imageViewZoomBottomSheet.setConfiguration(getFragmentManager(),imageViewZoomConfig,imageSaveProperties,bitmap);
-                }else {
-                    imageViewZoomBottomSheet.setConfiguration(getFragmentManager(),imageViewZoomConfig,bitmap);
-                }
-
+        threeDotImageView.setOnClickListener(view -> {
+            if (imageSaveProperties != null) {
+                imageViewZoomBottomSheet.setConfiguration(getFragmentManager(), imageViewZoomConfig, imageSaveProperties, bitmap);
+            } else {
+                imageViewZoomBottomSheet.setConfiguration(getFragmentManager(), imageViewZoomConfig, bitmap);
             }
         });
 
 
         configuration(imageViewZoomConfig);
 
-
         dialogImageView.setImage(ImageSource.bitmap(bitmap));
-
 
         return view;
     }
-
 
 
     public void init() {
@@ -87,6 +78,7 @@ public class Dialog extends DialogFragment {
 
     /**
      * When ImageSaveProperties is null
+     *
      * @param fragmentManager
      * @param bitmapFromView
      * @param imageViewZoomConfig
@@ -94,39 +86,41 @@ public class Dialog extends DialogFragment {
     public void show(FragmentManager fragmentManager, Bitmap bitmapFromView, ImageViewZoomConfig imageViewZoomConfig) {
         super.show(fragmentManager, TAG);
         bitmap = bitmapFromView;
-        this.imageViewZoomConfig=imageViewZoomConfig;
+        this.imageViewZoomConfig = imageViewZoomConfig;
     }
 
     /**
      * When ImageSaveProperties is not null
+     *
      * @param fragmentManager
      * @param bitmapFromView
      * @param imageViewZoomConfig
      * @param imageSaveProperties
      */
-    public void show(FragmentManager fragmentManager, Bitmap bitmapFromView, ImageViewZoomConfig imageViewZoomConfig,ImageSaveProperties imageSaveProperties) {
+    public void show(FragmentManager fragmentManager, Bitmap bitmapFromView, ImageViewZoomConfig imageViewZoomConfig, ImageSaveProperties imageSaveProperties) {
         super.show(fragmentManager, TAG);
         bitmap = bitmapFromView;
-        this.imageViewZoomConfig=imageViewZoomConfig;
-        this.imageSaveProperties=imageSaveProperties;
+        this.imageViewZoomConfig = imageViewZoomConfig;
+        this.imageSaveProperties = imageSaveProperties;
     }
 
     /**
      * Decide show three dot icon show
+     *
      * @param imageViewZoomConfig ImageViewZoom configuration object
      */
-    public void configuration(ImageViewZoomConfig imageViewZoomConfig){
-        if(imageViewZoomConfig != null){
+    public void configuration(ImageViewZoomConfig imageViewZoomConfig) {
+        if (imageViewZoomConfig != null) {
             threeDotImageView.setVisibility(View.VISIBLE);
-            imageViewZoomBottomSheet=new ImageViewZoomBottomSheet();
-            this.imageViewZoomConfig=imageViewZoomConfig;
+            imageViewZoomBottomSheet = new ImageViewZoomBottomSheet();
+            this.imageViewZoomConfig = imageViewZoomConfig;
         }
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        getDialog().getWindow().getAttributes().windowAnimations = R.style.DialogStyle;
+        Objects.requireNonNull(getDialog()).getWindow().getAttributes().windowAnimations = R.style.DialogStyle;
     }
 
     /**
@@ -136,15 +130,11 @@ public class Dialog extends DialogFragment {
         root = new RelativeLayout(getActivity());
         root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Objects.requireNonNull(getDialog()).requestWindowFeature(Window.FEATURE_NO_TITLE);
         getDialog().setContentView(root);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
-
         getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
     }
-
-
 
 
 }

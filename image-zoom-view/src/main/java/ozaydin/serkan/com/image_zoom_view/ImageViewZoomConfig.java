@@ -1,12 +1,11 @@
 package ozaydin.serkan.com.image_zoom_view;
 
-import java.util.stream.Stream;
-
 public class ImageViewZoomConfig {
-    private boolean isSave=false;
-    private boolean isTakePhoto=false;
-    private boolean isGetImageFromGalery=false;
-    private ImageViewZoomConfigSaveMethod imageViewZoomConfigSaveMethod=ImageViewZoomConfigSaveMethod.onlyOnDialog;
+    private boolean isSave = false;
+    private boolean isTakePhoto = false;
+    private boolean isGetImageFromGalery = false;
+    private ImageViewZoomConfigSaveMethod imageViewZoomConfigSaveMethod = ImageViewZoomConfigSaveMethod.onlyOnDialog;
+
     public ImageViewZoomConfig(Builder builder) {
         this.isSave = builder.isSave;
         this.isTakePhoto = builder.isTakePhoto;
@@ -22,19 +21,19 @@ public class ImageViewZoomConfig {
         this.imageViewZoomConfigSaveMethod = imageViewZoomConfigSaveMethod;
     }
 
-    public void saveProperty(boolean value){
-        this.isSave=value;
+    public void saveProperty(boolean value) {
+        this.isSave = value;
     }
 
-    public boolean getIsSave(){
+    public boolean getIsSave() {
         return this.isSave;
     }
 
-    public void takePhoto(boolean value){
-        this.isTakePhoto=value;
+    public void takePhoto(boolean value) {
+        this.isTakePhoto = value;
     }
 
-    public boolean getTakePhoto(){
+    public boolean getTakePhoto() {
         return this.isTakePhoto;
     }
 
@@ -46,50 +45,53 @@ public class ImageViewZoomConfig {
         isGetImageFromGalery = value;
     }
 
-    public enum ImageViewZoomConfigSaveMethod{
+    public enum ImageViewZoomConfigSaveMethod {
         onlyOnDialog(0),
         always(1);
 
         private int type;
+
         ImageViewZoomConfigSaveMethod(int type) {
             this.type = type;
         }
+
         public int getType() {
             return type;
         }
     }
 
 
-    public static class Builder{
+    public static class Builder {
 
-        private boolean isSave=false;
-        private boolean isTakePhoto=false;
-        private boolean isGetImageFromGalery=false;
-        private ImageViewZoomConfigSaveMethod imageViewZoomConfigSaveMethod=ImageViewZoomConfigSaveMethod.onlyOnDialog;
+        private boolean isSave = false;
+        private boolean isTakePhoto = false;
+        private boolean isGetImageFromGalery = false;
+        private ImageViewZoomConfigSaveMethod imageViewZoomConfigSaveMethod = ImageViewZoomConfigSaveMethod.onlyOnDialog;
 
-        public Builder(){ }
+        public Builder() {
+        }
 
-        public Builder saveProperty(boolean isSave){
+        public Builder saveProperty(boolean isSave) {
             this.isSave = isSave;
             return this;
         }
 
-        public Builder takePhoto(boolean isTakePhoto){
+        public Builder takePhoto(boolean isTakePhoto) {
             this.isTakePhoto = isTakePhoto;
             return this;
         }
 
-        public Builder isGetImageFromGalery(boolean isGetImageFromGalery){
+        public Builder isGetImageFromGalery(boolean isGetImageFromGalery) {
             this.isGetImageFromGalery = isGetImageFromGalery;
             return this;
         }
 
-        public Builder saveMethod(ImageViewZoomConfigSaveMethod saveConfig){
+        public Builder saveMethod(ImageViewZoomConfigSaveMethod saveConfig) {
             this.imageViewZoomConfigSaveMethod = saveConfig;
             return this;
         }
 
-        public ImageViewZoomConfig build(){
+        public ImageViewZoomConfig build() {
             return new ImageViewZoomConfig(this);
         }
 

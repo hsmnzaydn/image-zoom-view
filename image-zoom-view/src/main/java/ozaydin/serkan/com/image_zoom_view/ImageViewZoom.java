@@ -13,12 +13,15 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+
 import androidx.fragment.app.FragmentActivity;
 import androidx.appcompat.widget.AppCompatImageView;
+
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import java.util.Objects;
 
 
 /**
@@ -30,10 +33,10 @@ public class ImageViewZoom extends AppCompatImageView implements View.OnClickLis
     private Boolean isCircle = false;
     private ImageViewZoomConfig imageViewZoomConfig;
     private ImageSaveProperties imageSaveProperties;
+
     public ImageViewZoom(Context context) {
         super(context);
         setOnClickListener(this);
-
     }
 
     public ImageViewZoom(Context context, AttributeSet attrs) {
@@ -49,87 +52,80 @@ public class ImageViewZoom extends AppCompatImageView implements View.OnClickLis
         } finally {
             a.recycle();
         }
-
     }
 
 
     public ImageViewZoom(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setOnClickListener(this);
-
     }
 
     /**
-     *
      * @return ImageViewZoom's base64
      */
-    public String getBase64(){
-        return ImageProperties.bitmapToBase64(((BitmapDrawable)this.getDrawable()).getBitmap());
+    public String getBase64() {
+        return ImageProperties.bitmapToBase64(((BitmapDrawable) this.getDrawable()).getBitmap());
     }
 
     /**
      * Return bitmap of ImageViewZoom
+     *
      * @return
      */
-    public Bitmap getBitmap(){
-        return ((BitmapDrawable)this.getDrawable()).getBitmap();
+    public Bitmap getBitmap() {
+        return ((BitmapDrawable) this.getDrawable()).getBitmap();
     }
 
     /**
      * Save image
+     *
      * @param activity
-     * @param folderName Folder name to save
-     * @param fileName By what name to save
-     * @param compressFormat Compress Format
+     * @param folderName            Folder name to save
+     * @param fileName              By what name to save
+     * @param compressFormat        Compress Format
      * @param permissionRequestCode Runtime permission code
      * @param saveFileListener
      */
-    public void saveImage(Activity activity, String folderName, String fileName, Bitmap.CompressFormat compressFormat, int permissionRequestCode, ImageViewZoomConfig imageViewZoomConfig, SaveFileListener saveFileListener){
+    public void saveImage(Activity activity, String folderName, String fileName, Bitmap.CompressFormat compressFormat, int permissionRequestCode, ImageViewZoomConfig imageViewZoomConfig, SaveFileListener saveFileListener) {
 
 
-       if(imageViewZoomConfig.getImageViewZoomConfigSaveMethod() == null){
-           Log.e("ImageViewZoom", "Please set ImageViewZoomConfig save method\n\n");
-           throw new RuntimeException();
-       }else {
-           switch (imageViewZoomConfig.getImageViewZoomConfigSaveMethod()){
-               case always:
-                   if(Permission.askPermissionForActivity(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE,permissionRequestCode)){
-                       ImageProperties.saveImage(getBitmap(),folderName,fileName,compressFormat,saveFileListener);
-                       imageSaveProperties=new ImageSaveProperties(folderName,fileName,compressFormat,permissionRequestCode,saveFileListener);
-                   }
-                   break;
-               case onlyOnDialog:
-                   imageSaveProperties=new ImageSaveProperties(folderName,fileName,compressFormat,permissionRequestCode,saveFileListener);
-                   break;
-               default:
-                   imageSaveProperties=new ImageSaveProperties(folderName,fileName,compressFormat,permissionRequestCode,saveFileListener);
-                   break;
-           }
-       }
-
+        if (imageViewZoomConfig.getImageViewZoomConfigSaveMethod() == null) {
+            Log.e("ImageViewZoom", "Please set ImageViewZoomConfig save method\n\n");
+            throw new RuntimeException();
+        } else {
+            if (imageViewZoomConfig.getImageViewZoomConfigSaveMethod() == ImageViewZoomConfig.ImageViewZoomConfigSaveMethod.always) {
+                if (Permission.askPermissionForActivity(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE, permissionRequestCode)) {
+                    ImageProperties.saveImage(getBitmap(), folderName, fileName, compressFormat, saveFileListener);
+                    imageSaveProperties = new ImageSaveProperties(folderName, fileName, compressFormat, permissionRequestCode, saveFileListener);
+                }
+            } else {
+                imageSaveProperties = new ImageSaveProperties(folderName, fileName, compressFormat, permissionRequestCode, saveFileListener);
+            }
+        }
     }
 
     /**
      * Set imageViewZoom configuration
+     *
      * @param config ImageViewZoomConfig object
      */
-    public void setConfig(ImageViewZoomConfig config){
-        this.imageViewZoomConfig=config;
+    public void setConfig(ImageViewZoomConfig config) {
+        this.imageViewZoomConfig = config;
     }
-
 
 
     /**
      * When click ImageViewZoom
+     *
      * @param view
      */
     @Override
     public void onClick(View view) {
         if (getDrawable() != null) {
-            if(imageSaveProperties != null){
-                new Dialog().show(getActivity().getSupportFragmentManager(), getBitmap(),this.imageViewZoomConfig,imageSaveProperties);
-            }else{
-                new Dialog().show(getActivity().getSupportFragmentManager(), getBitmap(),this.imageViewZoomConfig);
+            if (imageSaveProperties != null) {
+                new Dialog().show(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), getBitmap(), this.imageViewZoomConfig, imageSaveProperties);
+            } else {
+                new Dialog().show(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), getBitmap(), this.imageViewZoomConfig);
             }
         }
     }
@@ -137,7 +133,7 @@ public class ImageViewZoom extends AppCompatImageView implements View.OnClickLis
     /**
      * Return the activity which might be needed as context object but is not given by View#getContext
      * as with support library <23.0.0 it might just be a wrapper.
-     *
+     * <p>
      * Solution from https://stackoverflow.com/a/38814443/8524651
      *
      * @return the correct activity context
@@ -168,6 +164,7 @@ public class ImageViewZoom extends AppCompatImageView implements View.OnClickLis
 
     /**
      * Draws ImageViewZoom on view
+     *
      * @param canvas
      */
     public void drawAsCircle(Canvas canvas) {

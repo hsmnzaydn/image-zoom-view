@@ -1,2 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ozaydin.serkan.com.image_zoom_view" />
+<manifest package="ozaydin.serkan.com.image_zoom_view" />

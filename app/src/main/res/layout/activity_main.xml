@@ -7,25 +7,25 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:gravity="center"
-        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:orientation="vertical">
 
-    <ozaydin.serkan.com.image_zoom_view.ImageViewZoom
-        android:layout_gravity="center"
-        android:id="@+id/activity_main_image_view"
-        android:layout_width="180dp"
-        app:circle="true"
-        android:layout_height="180dp"
-        android:src="@drawable/aleyna_fox" />
+        <ozaydin.serkan.com.image_zoom_view.ImageViewZoom
+            android:id="@+id/activity_main_image_view"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_gravity="center"
+            android:src="@drawable/aleyna_fox"
+            app:circle="true" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text=" It's a lot more painful than a paper cut. - Aleyna Fox "/>
+            android:text=" It's a lot more painful than a paper cut. - Aleyna Fox " />
     </LinearLayout>
 </LinearLayout>
