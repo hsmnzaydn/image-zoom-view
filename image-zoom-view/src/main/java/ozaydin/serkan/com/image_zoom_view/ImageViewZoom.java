@@ -13,6 +13,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -94,8 +95,12 @@ public class ImageViewZoom extends AppCompatImageView implements View.OnClickLis
             throw new RuntimeException();
         } else {
             if (imageViewZoomConfig.getImageViewZoomConfigSaveMethod() == ImageViewZoomConfig.ImageViewZoomConfigSaveMethod.always) {
-                if (Permission.askPermissionForActivity(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE, permissionRequestCode)) {
-                    ImageProperties.saveImage(getBitmap(), folderName, fileName, compressFormat, saveFileListener);
+                // On Android 10+ we don't need WRITE_EXTERNAL_STORAGE permission for MediaStore
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    ImageProperties.saveImage(activity, getBitmap(), folderName, fileName, compressFormat, saveFileListener);
+                    imageSaveProperties = new ImageSaveProperties(folderName, fileName, compressFormat, permissionRequestCode, saveFileListener);
+                } else if (Permission.askPermissionForActivity(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE, permissionRequestCode)) {
+                    ImageProperties.saveImage(activity, getBitmap(), folderName, fileName, compressFormat, saveFileListener);
                     imageSaveProperties = new ImageSaveProperties(folderName, fileName, compressFormat, permissionRequestCode, saveFileListener);
                 }
             } else {

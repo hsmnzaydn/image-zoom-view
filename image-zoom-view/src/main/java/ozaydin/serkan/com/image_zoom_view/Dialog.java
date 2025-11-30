@@ -55,9 +55,9 @@ public class Dialog extends DialogFragment {
 
         threeDotImageView.setOnClickListener(view -> {
             if (imageSaveProperties != null) {
-                imageViewZoomBottomSheet.setConfiguration(getFragmentManager(), imageViewZoomConfig, imageSaveProperties, bitmap);
+                imageViewZoomBottomSheet.setConfiguration(getParentFragmentManager(), imageViewZoomConfig, imageSaveProperties, bitmap);
             } else {
-                imageViewZoomBottomSheet.setConfiguration(getFragmentManager(), imageViewZoomConfig, bitmap);
+                imageViewZoomBottomSheet.setConfiguration(getParentFragmentManager(), imageViewZoomConfig, bitmap);
             }
         });
 
