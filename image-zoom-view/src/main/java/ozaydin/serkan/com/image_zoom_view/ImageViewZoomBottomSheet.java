@@ -2,6 +2,7 @@ package ozaydin.serkan.com.image_zoom_view;
 
 import android.Manifest;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -35,7 +36,10 @@ public class ImageViewZoomBottomSheet extends BottomSheetDialogFragment {
         configuration();
 
         downloadImageLinearLayout.setOnClickListener(view -> {
-            if (Permission.askPermissionForFragment(requireActivity(), ImageViewZoomBottomSheet.this, Manifest.permission.WRITE_EXTERNAL_STORAGE, imageSaveProperties.getPermissionRequestCode())) {
+            // On Android 10+ we don't need WRITE_EXTERNAL_STORAGE permission for MediaStore
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                saveImage();
+            } else if (Permission.askPermissionForFragment(requireActivity(), ImageViewZoomBottomSheet.this, Manifest.permission.WRITE_EXTERNAL_STORAGE, imageSaveProperties.getPermissionRequestCode())) {
                 saveImage();
             }
         });
@@ -73,14 +77,14 @@ public class ImageViewZoomBottomSheet extends BottomSheetDialogFragment {
     }
 
     public void saveImage() {
-        ImageProperties.saveImage(bitmap, imageSaveProperties.getFolderName(), imageSaveProperties.getFileName(), imageSaveProperties.getCompressFormat(), imageSaveProperties.getSaveFileListener());
+        ImageProperties.saveImage(requireContext(), bitmap, imageSaveProperties.getFolderName(), imageSaveProperties.getFileName(), imageSaveProperties.getCompressFormat(), imageSaveProperties.getSaveFileListener());
         dismiss();
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (grantResults[0] == 0) {
+        if (grantResults.length > 0 && grantResults[0] == 0) {
             saveImage();
         }
     }
