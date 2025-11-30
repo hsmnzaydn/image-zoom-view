@@ -76,23 +76,33 @@ public class ImageProperties {
         contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + File.separator + folderName);
         
         Uri imageUri = null;
+        OutputStream outputStream = null;
         try {
             imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-            if (imageUri != null) {
-                OutputStream outputStream = resolver.openOutputStream(imageUri);
-                if (outputStream != null) {
-                    bitmap.compress(compressFormat, 90, outputStream);
-                    outputStream.flush();
+            if (imageUri == null) {
+                saveFileListener.onFail(new Exception("Failed to create MediaStore entry"));
+                return;
+            }
+            outputStream = resolver.openOutputStream(imageUri);
+            if (outputStream == null) {
+                saveFileListener.onFail(new Exception("Failed to open output stream"));
+                return;
+            }
+            bitmap.compress(compressFormat, 90, outputStream);
+            outputStream.flush();
+            // Create a virtual file for callback compatibility
+            File virtualFile = new File(Environment.DIRECTORY_PICTURES + File.separator + folderName + File.separator + filename + extension);
+            saveFileListener.onSuccess(virtualFile);
+        } catch (Exception exception) {
+            Log.e("ImageViewZoom", exception.toString());
+            saveFileListener.onFail(exception);
+        } finally {
+            if (outputStream != null) {
+                try {
                     outputStream.close();
-                    // Create a virtual file for callback compatibility
-                    File virtualFile = new File(Environment.DIRECTORY_PICTURES + File.separator + folderName + File.separator + filename + extension);
-                    saveFileListener.onSuccess(virtualFile);
+                } catch (Exception ignored) {
                 }
             }
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            Log.e("ImageViewZoom", exception.getMessage());
-            saveFileListener.onFail(exception);
         }
     }
 
@@ -111,38 +121,29 @@ public class ImageProperties {
             out.close();
             saveFileListener.onSuccess(file);
         } catch (Exception exception) {
-            exception.printStackTrace();
-            Log.e("ImageViewZoom", exception.getMessage());
+            Log.e("ImageViewZoom", exception.toString());
             saveFileListener.onFail(exception);
 
         }
     }
 
     private static String getMimeType(Bitmap.CompressFormat compressFormat) {
-        switch (compressFormat) {
-            case PNG:
-                return "image/png";
-            case WEBP:
-            case WEBP_LOSSY:
-            case WEBP_LOSSLESS:
-                return "image/webp";
-            case JPEG:
-            default:
-                return "image/jpeg";
+        if (compressFormat == Bitmap.CompressFormat.PNG) {
+            return "image/png";
+        } else if (compressFormat == Bitmap.CompressFormat.WEBP) {
+            return "image/webp";
+        } else {
+            return "image/jpeg";
         }
     }
 
     private static String getExtension(Bitmap.CompressFormat compressFormat) {
-        switch (compressFormat) {
-            case PNG:
-                return ".png";
-            case WEBP:
-            case WEBP_LOSSY:
-            case WEBP_LOSSLESS:
-                return ".webp";
-            case JPEG:
-            default:
-                return ".jpg";
+        if (compressFormat == Bitmap.CompressFormat.PNG) {
+            return ".png";
+        } else if (compressFormat == Bitmap.CompressFormat.WEBP) {
+            return ".webp";
+        } else {
+            return ".jpg";
         }
     }
 }
