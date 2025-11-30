@@ -65,16 +65,24 @@ public class ImageViewZoom extends AppCompatImageView implements View.OnClickLis
      * @return ImageViewZoom's base64
      */
     public String getBase64() {
-        return ImageProperties.bitmapToBase64(((BitmapDrawable) this.getDrawable()).getBitmap());
+        Bitmap bitmap = getBitmap();
+        if (bitmap == null) {
+            return null;
+        }
+        return ImageProperties.bitmapToBase64(bitmap);
     }
 
     /**
      * Return bitmap of ImageViewZoom
      *
-     * @return
+     * @return Bitmap representation of the current drawable
      */
     public Bitmap getBitmap() {
-        return ((BitmapDrawable) this.getDrawable()).getBitmap();
+        Drawable drawable = this.getDrawable();
+        if (drawable == null) {
+            return null;
+        }
+        return drawableToBitmap(drawable);
     }
 
     /**
@@ -182,7 +190,11 @@ public class ImageViewZoom extends AppCompatImageView implements View.OnClickLis
         if (getWidth() == 0 || getHeight() == 0) {
             return;
         }
-        Bitmap b = ((BitmapDrawable) drawable).getBitmap();
+
+        Bitmap b = drawableToBitmap(drawable);
+        if (b == null) {
+            return;
+        }
         Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
 
         int w = getWidth();
@@ -191,6 +203,36 @@ public class ImageViewZoom extends AppCompatImageView implements View.OnClickLis
 
         Bitmap roundBitmap = getCroppedBitmap(bitmap, w);
         canvas.drawBitmap(roundBitmap, 0, 0, null);
+    }
+
+    /**
+     * Converts any Drawable to a Bitmap
+     *
+     * @param drawable The drawable to convert
+     * @return Bitmap representation of the drawable
+     */
+    private Bitmap drawableToBitmap(Drawable drawable) {
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable) drawable).getBitmap();
+        }
+
+        int width = drawable.getIntrinsicWidth();
+        int height = drawable.getIntrinsicHeight();
+
+        if (width <= 0 || height <= 0) {
+            width = getWidth();
+            height = getHeight();
+        }
+
+        if (width <= 0 || height <= 0) {
+            return null;
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas bitmapCanvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, bitmapCanvas.getWidth(), bitmapCanvas.getHeight());
+        drawable.draw(bitmapCanvas);
+        return bitmap;
     }
 
 
